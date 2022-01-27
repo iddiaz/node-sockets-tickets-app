@@ -26,9 +26,9 @@ socket.on('disconnect', () => {
 });
 
 
-socket.on('enviar-mensaje', (payload) => {
-    console.log( payload )
-})
+// socket.on('ultimo-ticket', (payload) => {
+//     console.log( 'ultimo-ticket', payload )
+// })
 
 
 btnEnviar.addEventListener( 'click', () => {
