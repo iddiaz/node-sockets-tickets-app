@@ -1,9 +1,8 @@
 
 // Referencias del HTML
-const lblOnline  = document.querySelector('#lblOnline');
-const lblOffline = document.querySelector('#lblOffline');
-const txtMensaje = document.querySelector('#txtMensaje');
-const btnEnviar  = document.querySelector('#btnEnviar');
+const lblNuevoticket  = document.querySelector('#lblNuevoticket');
+const btnCrear = document.querySelector('button');
+
 
 
 const socket = io();
@@ -12,36 +11,21 @@ const socket = io();
 
 socket.on('connect', () => {
     // console.log('Conectado');
-
-    lblOffline.style.display = 'none';
-    lblOnline.style.display  = '';
-
+    btnCrear.disabled = false;
 });
 
 socket.on('disconnect', () => {
     // console.log('Desconectado del servidor');
 
-    lblOnline.style.display  = 'none';
-    lblOffline.style.display = '';
+   btnCrear.disabled = true;
 });
 
 
-// socket.on('ultimo-ticket', (payload) => {
-//     console.log( 'ultimo-ticket', payload )
-// })
+btnCrear.addEventListener( 'click', () => {
 
-
-btnEnviar.addEventListener( 'click', () => {
-
-    const mensaje = txtMensaje.value;
-    const payload = {
-        mensaje,
-        id: '123ABC',
-        fecha: new Date().getTime()
-    }
-    
-    socket.emit( 'enviar-mensaje', payload, ( id ) => {
-        console.log('Desde el server', id );
+    socket.emit( 'siguiente-ticket', null, ( ticket ) => {
+        // console.log('Desde el server', ticket );
+        lblNuevoticket.innerText = ticket;
     });
 
 });

@@ -4,7 +4,8 @@ const fs = require('fs');
 
 
 class Ticket {
-   constructor (numero, escritorio ){
+   
+   constructor ( numero, escritorio ){
 
       this.numero = numero;
       this.escritorio = escritorio;
@@ -14,18 +15,18 @@ class Ticket {
 
 class TicketControl {
 
-
    constructor(){
 
       this.ultimo  = 0;
       this.hoy     = new Date().getDate();
-      this.tickets = [];
+      this.tickets  = [];
       this.ultimos4 = [];
 
       this.init();
    }
 
    get toJson() {
+      
       return {
          ultimo: this.ultimo,
          hoy: this.hoy,
@@ -54,13 +55,13 @@ class TicketControl {
 
    guardarDb(){
 
-      const dbPath = path.join( __dirname, '../db/data.json');
+      const dbPath = path.join( __dirname, '../db/data.json' );
       fs.writeFileSync( dbPath, JSON.stringify( this.toJson ) )
 
    }
 
    siguiente() {
-      this.ultimo +=1;
+      this.ultimo += 1;
       const ticket = new Ticket ( this.ultimo, null );
       this.tickets.push( ticket );
 
@@ -68,15 +69,15 @@ class TicketControl {
       return 'Ticket ' + ticket.numero;
    }
 
-   atenderTicket(escritorio){
+   atenderTicket( escritorio ){
       //No tenemos tickets
       if(this.tickets.length === 0){
          return null;
       }
 
-      const ticket = this.tickets[0];
-      //borra 
-      this.tickets.shift();
+      //borra      
+      const ticket =  this.tickets.shift(); //this.tickets[0];
+      
 
       ticket.escritorio = escritorio;
       //añade ticket al principio
